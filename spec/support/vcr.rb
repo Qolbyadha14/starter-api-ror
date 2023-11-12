@@ -9,11 +9,17 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.configure_rspec_metadata!
   c.allow_http_connections_when_no_cassette = true
-  c.ignore_hosts 'codeclimate.com'
-
-  c.before_record do |interaction|
-    interaction.request.headers['Authorization'] = '[FILTERED]'
-  end
+  c.ignore_hosts(
+    'codeclimate.com',
+    'localhost',
+    '127.0.0.1',
+    "github.com",
+    "chromedriver.storage.googleapis.com",
+    "api.github.com",
+    "selenium-release.storage.googleapis.com",
+    "developer.microsoft.com",
+    'objects.githubusercontent.com'
+  )
 end
 
 RSpec.configure do |config|
@@ -21,17 +27,12 @@ RSpec.configure do |config|
   config.around(:each) do |example|
     options = example.metadata[:vcr] || {}
     options[:allow_playback_repeats] = true
-    options[:match_requests_on] = %i[path]
-
     if options[:record] == :skip
       WebMock.allow_net_connect!
       VCR.turned_off(ignore_cassettes: true, &example)
       WebMock.disable_net_connect!(allow_localhost: false)
     else
-      custom_name = example.metadata.dig(:vcr, :cassette_name)
-      generated_name = example.metadata[:full_description].split(/\s+/, 2).join('/').underscore.tr('.', '/').gsub(/[^\w\/]+/, '_').gsub(/\/$/, '')
-      name = custom_name || generated_name
-
+      name = example.metadata[:full_description].split(/\s+/, 2).join('/').underscore.tr('.', '/').gsub(/[^\w\/]+/, '_').gsub(/\/$/, '')
       VCR.use_cassette(name, options, &example)
     end
   end

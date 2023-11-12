@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+# User
+User.create(username: 'user1', password: 'password1')
+User.create(username: 'user2', password: 'password2')
+
+puts 'Seeds created successfully.'
