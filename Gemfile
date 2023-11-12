@@ -35,18 +35,29 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
-gem 'jwt'
+gem 'jwt', '~> 2.7', '>= 2.7.1'
 gem 'bcrypt'
 gem 'rswag-api'
 gem 'rswag-ui'
+gem "discard", "~> 1.2"
+gem 'openssl', '~> 3.2'
+gem "kaminari", "~> 1.2"
+gem 'ransack'
+gem "rack-cors", "~> 2.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails"
-  gem "factory_bot"
-  gem 'factory_bot_rails'
-  gem 'rswag-specs'
+  gem "factory_bot_rails", "~> 6.2"
+  gem "rubocop", "~> 1.57", require: false
+  gem "brakeman", "~> 6.0", require: false
+  gem "bundler-audit", "~> 0.9.1", require: false
+  gem "rubocop-rspec", "~> 2.25", require: false
+  gem "rubocop-rails", "~> 2.22", require: false
+  gem "rubocop-factory_bot", "~> 2.23", require: false
+  gem "rswag-specs"
+  gem "rails-erd"
 end
 
 group :development do
@@ -55,7 +66,10 @@ group :development do
 end
 
 group :test do
+  gem "vcr"
+  gem "webmock", require: "webmock/rspec"
   gem 'shoulda-matchers', '~> 5.0'
-  gem 'vcr'
-  gem 'webmock'
+  gem "timecop", "~> 0.9.8"
+  gem "rspec"
+  gem "simplecov", require: false
 end
