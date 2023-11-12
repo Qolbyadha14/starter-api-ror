@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_12_061227) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_12_131015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_12_061227) do
     t.index ["wallets_id"], name: "index_user_wallets_on_wallets_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "wallets", force: :cascade do |t|
     t.string "walletable_type", null: false
     t.bigint "walletable_id", null: false
@@ -58,6 +65,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_12_061227) do
     t.string "currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_wallets_on_discarded_at"
     t.index ["walletable_type", "walletable_id"], name: "index_wallets_on_walletable"
   end
 
