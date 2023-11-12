@@ -77,6 +77,7 @@ GEM
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     base64 (0.2.0)
+    bcrypt (3.1.19)
     bigdecimal (3.1.4)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
@@ -108,6 +109,7 @@ GEM
     irb (1.8.3)
       rdoc
       reline (>= 0.3.8)
+    jwt (2.7.1)
     loofah (2.21.4)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -223,10 +225,12 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  bcrypt
   bootsnap
   debug
   factory_bot
   factory_bot_rails
+  jwt
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.1)
