@@ -3,7 +3,7 @@ FactoryBot.define do
     source_wallet { nil }
     target_wallet { nil }
     amount { "9.99" }
-    transaction_type { "MyString" }
-    description { "MyString" }
+    transaction_type { "Debit" }
+    description { "Withdrawal" }
   end
 end

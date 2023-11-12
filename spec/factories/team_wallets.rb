@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :team_wallet do
     wallets { nil }
-    team_name { "MyString" }
+    team_name { "Engineering" }
   end
 end
