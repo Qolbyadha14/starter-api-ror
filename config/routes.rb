@@ -11,6 +11,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :sessions
-  resources :stocks
-  resources :teams
+  resources :wallets
 end
