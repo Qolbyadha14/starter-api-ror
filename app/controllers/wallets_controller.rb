@@ -1,10 +1,9 @@
+# app/controllers/wallets_controller.rb
 class WalletsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :set_wallet, only: %i[show update destroy]
 
   def index
-    @q = Wallet.ransack(params[:q])
-    @wallets = @q.result(distinct: true).page(params[:page]).per(10)
-
+    @wallets = Wallet.all
     render json: @wallets
   end
 
