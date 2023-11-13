@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions
   resources :stocks
+  resources :teams
 end
