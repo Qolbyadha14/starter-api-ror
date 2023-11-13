@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_12_104356) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_13_034202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_12_104356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["wallets_id"], name: "index_stock_wallets_on_wallets_id"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "symbol"
+    t.string "name"
+    t.decimal "price", precision: 10, scale: 2
+    t.string "exchange"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "team_wallets", force: :cascade do |t|
@@ -65,6 +74,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_12_104356) do
     t.string "currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_wallets_on_discarded_at"
     t.index ["walletable_type", "walletable_id"], name: "index_wallets_on_walletable"
   end
 
