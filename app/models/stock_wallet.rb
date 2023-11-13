@@ -1,3 +1,3 @@
-class StockWallet < ApplicationRecord
+class StockWallet < Wallet
   belongs_to :wallets
 end
