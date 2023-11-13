@@ -58,6 +58,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_12_061227) do
     t.string "currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_wallets_on_discarded_at"
     t.index ["walletable_type", "walletable_id"], name: "index_wallets_on_walletable"
   end
 
