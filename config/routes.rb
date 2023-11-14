@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :users
   resources :sessions
-  resources :wallets
   resources :stocks
   resources :teams
+
+  post "wallets/credit" => "wallets#credit"
+  post "wallets/debit" => "wallets#debit"
+
 end

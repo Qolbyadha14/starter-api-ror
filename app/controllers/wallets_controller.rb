@@ -1,46 +1,32 @@
 # app/controllers/wallets_controller.rb
 class WalletsController < ApplicationController
-  before_action :set_wallet, only: %i[show update destroy]
+  before_action :authenticate_user!
 
-  def index
-    @wallets = Wallet.all
-    render json: @wallets
-  end
-
-  def show
-    render json: @wallet
-  end
-
-  def create
-    @wallet = Wallet.new(wallet_params)
-
-    if @wallet.save
-      render json: @wallet, status: :created
+  def credit
+    wallet = find_wallet
+    amount = params[:amount].to_f
+    if amount <= 0
+      render json: { error: "Amount must be greater than 0" }, status: :unprocessable_entity
     else
-      render json: @wallet.errors, status: :unprocessable_entity
+      wallet.credit(amount)
+      render json: { success: "Amount credited successfully" }
     end
   end
 
-  def update
-    if @wallet.update(wallet_params)
-      render json: @wallet
+  def debit
+    wallet = find_wallet
+    amount = params[:amount].to_f
+    if amount <= 0 || wallet.balance_before_type_cast.to_f < amount
+      render json: { error: "Invalid debit amount or insufficient balance" }, status: :unprocessable_entity
     else
-      render json: @wallet.errors, status: :unprocessable_entity
+      wallet.debit(amount)
+      render json: { success: "Amount debited successfully" }
     end
-  end
-
-  def destroy
-    @wallet.discard
-    head :no_content
   end
 
   private
 
-  def set_wallet
-    @wallet = Wallet.find(params[:id])
-  end
-
-  def wallet_params
-    params.require(:wallet).permit(:balance, :currency, :walletable_type, :walletable_id)
+  def find_wallet
+    @current_user.wallet
   end
 end
