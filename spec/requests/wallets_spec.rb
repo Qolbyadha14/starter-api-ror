@@ -38,6 +38,10 @@ describe 'Wallets API' do
         let(:wallet) { { balance: 100.00, currency: 'USD', walletable_type: 'User', walletable_id: User.find(2).id } }
         run_test! do |response|
           expect(response).to have_http_status(:created)
+          json_response = response.parsed_body
+          expect(json_response['balance']).to eq("100.0")
+          expect(json_response['currency']).to eq('USD')
+          expect(json_response['walletable_type']).to eq('User')
         end
       end
 
