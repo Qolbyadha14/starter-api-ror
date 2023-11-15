@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 
   post "wallets/credit" => "wallets#credit"
   post "wallets/debit" => "wallets#debit"
+  post 'wallets/transfer', to: 'wallets#transfer'
 
 end

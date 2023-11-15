@@ -25,4 +25,17 @@ class Wallet < ApplicationRecord
   def debit(amount)
     debit_transactions.create!(amount:)
   end
+
+  def transfer_to(target_wallet, amount)
+    return false if amount <= 0 || balance_before_type_cast.to_f < amount
+
+    transaction do
+      debit(amount)
+      target_wallet.credit(amount)
+    end
+
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
 end
