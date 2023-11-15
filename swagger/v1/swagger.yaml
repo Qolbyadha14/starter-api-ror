@@ -13,6 +13,8 @@ paths:
       responses:
         '200':
           description: Auth Success
+        '401':
+          description: Auth Failed
       requestBody:
         content:
           application/json:
@@ -26,6 +28,170 @@ paths:
               required:
               - username
               - password
+  "/teams":
+    get:
+      summary: Retrieves a list of teams
+      responses:
+        '200':
+          description: teams found
+    post:
+      summary: Creates a team
+      parameters: []
+      responses:
+        '201':
+          description: team created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+              required:
+              - name
+  "/teams/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Retrieves a team
+      responses:
+        '200':
+          description: team found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                required:
+                - id
+                - name
+        '404':
+          description: team not found
+    put:
+      summary: Updates a team
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: team updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+              required:
+              - name
+    delete:
+      summary: Deletes a team
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: team deleted
+        '404':
+          description: team not found
+  "/wallets/credit":
+    post:
+      summary: Credits the wallet with a valid amount
+      tags:
+      - Wallets
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: invalid amount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+              required:
+              - amount
+  "/wallets/debit":
+    post:
+      summary: Debits the wallet with a valid amount
+      tags:
+      - Wallets
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '422':
+          description: invalid amount or insufficient balance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+              required:
+              - amount
+  "/wallets/transfer":
+    post:
+      summary: Transfers money from one wallet to another
+      tags:
+      - Wallets
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '200':
+          description: successful transfer
+        '422':
+          description: invalid amount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                target_wallet_id:
+                  type: integer
+              required:
+              - amount
+              - target_wallet_id
 servers:
 - url: https://{defaultHost}
   variables:

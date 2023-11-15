@@ -13,4 +13,9 @@ Rails.application.routes.draw do
   resources :sessions
   resources :stocks
   resources :teams
+
+  post "wallets/credit" => "wallets#credit"
+  post "wallets/debit" => "wallets#debit"
+  post 'wallets/transfer', to: 'wallets#transfer'
+
 end
